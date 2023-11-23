@@ -1,0 +1,92 @@
+{% extends "base.html" %} 
+
+{% block title %} Iris {% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-5">
+  <div class="row">
+    <form class="col-6" method="POST">
+      {{ form.csrf_token }} 
+      <div class="input-group mb-3" >
+        {{ form.classifier(class_="form-select") }}
+        {{ form.btn(class_="btn btn-outline-secondary") }}
+      </div>
+
+      {% if classifier %}
+        <div class="row">
+          {% if form.n_neighbors %}
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <span class="input-group-text">{{ form.n_neighbors.label() }}</span>
+                {{ form.n_neighbors(class_="form-control") }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if form.random_state %}
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <span class="input-group-text">{{ form.random_state.label() }}</span>
+                {{ form.random_state(class_="form-control") }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if form.max_iter %}
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <span class="input-group-text">{{ form.max_iter.label() }}</span>
+                {{ form.max_iter(class_="form-control") }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if form.max_leaf_nodes %}
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <span class="input-group-text">{{ form.max_leaf_nodes.label() }}</span>
+                {{ form.max_leaf_nodes(class_="form-control") }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if form.max_depth %}
+            <div class="col-6">
+              <div class="input-group mb-3">
+                <span class="input-group-text">{{ form.max_depth.label() }}</span>
+                {{ form.max_depth(class_="form-control") }}
+              </div>
+            </div>
+          {% endif %}
+
+
+          <div class="col-12 text-center">
+            {{ form.classify_btn(class_="btn btn-primary") }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if accuracy %}
+        <div class="row mt-5">
+          <div class="col-12 d-flex justify-content-center">
+            <ul class="list-group list-group-horizontal">
+              <li class="list-group-item">
+                Accuracy
+                <span class="badge text-bg-secondary">{{ accuracy }}</span>
+              </li>
+              <li class="list-group-item">
+                Macro-Avg
+                <span class="badge text-bg-secondary">{{ macro_avg }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+      
+    </form>
+    <div class="col-6 d-flex align-items-center justify-content-center">
+      <img src="{{ chart }}" style="max-width: 100%;" />
+    </div>
+  </div>
+</div>
+{% endblock %}
